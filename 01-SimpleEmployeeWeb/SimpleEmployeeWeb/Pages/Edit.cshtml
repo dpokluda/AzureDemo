@@ -1,0 +1,45 @@
+﻿@page
+@model EditModel
+@{
+    ViewData["Title"] = "Update employee";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div class="mb-3">
+Update employee @Model.Id data...
+</div>
+
+<form>
+    <div class="mb-3">
+        <label for="inputName">Picture</label>
+        <i class="bi bi-file-person"></i>
+    </div>
+    <div class="mb-3">
+        <label for="inputName">Name</label>
+        <input id="inputName" class="form-control col-md-6" placeholder="Employee full name" />
+    </div>
+    <div class="mb-3">
+        <label for="inputName">E-mail</label>
+        <input id="inputEmail" class="form-control col-md-6" placeholder="Employee e-mail address" />
+    </div>
+    <div class="mb-3">
+        <label for="inputDepartment">Department</label>
+        <input id="inputDepartment" class="form-control col-md-6" placeholder="Employee department" />
+    </div>
+    <div class="mb-3">
+        <label for="inputInterests">Interests:</label>
+        <div class="form-check">
+            <span class="col-sm-1" />
+            <input class="form-check-input" type="checkbox" value="mac" id="checkboxMac" />
+            <label for="checkboxMac"><i class="bi bi-apple"> Mac user</i></label>
+        </div>
+        <div class="form-check">
+            <span class="col-sm-1" />
+            <input class="form-check-input" type="checkbox" value="win" id="checkboxWindows" />
+            <label for="checkboxWindows"><i class="bi bi-microsoft"> Windows user</i></label>
+        </div>
+    </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>    
+</form>
