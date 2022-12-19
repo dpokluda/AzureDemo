@@ -5,15 +5,18 @@
 // -------------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Test.Components;
 
 namespace SimpleEmployeeWeb.Pages;
 
 public class AddNewModel : PageModel
 {
+    private readonly IEmployeeRepository _repository;
     private readonly ILogger<AddNewModel> _logger;
 
-    public AddNewModel(ILogger<AddNewModel> logger)
+    public AddNewModel(IEmployeeRepository repository, ILogger<AddNewModel> logger)
     {
+        _repository = repository;
         _logger = logger;
     }
     public void OnGet()

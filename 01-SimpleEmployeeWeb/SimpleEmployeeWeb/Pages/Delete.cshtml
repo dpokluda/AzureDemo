@@ -5,4 +5,13 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-Do you really want to delete the existing employee @Model.Id?
+<form>
+    <div class="mb-3">
+        Do you really want to delete @Model.Employee.Name?
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        <a type="button" class="btn btn-primary btn-sm" href="~/">Cancel</a>
+    </div>
+</form>

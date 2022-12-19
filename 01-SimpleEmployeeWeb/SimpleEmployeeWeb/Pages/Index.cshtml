@@ -18,29 +18,30 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td><i class="bi bi-file-person"></i></td>
-        <td>David Pokluda</td>
-        <td>Engineering</td>
-        <td>david@pokluda.cz</td>
-        <td><i class="bi bi-microsoft"></i></td>
-        <td>
-            <a type="button" class="btn btn-outline-primary btn-sm" href="~/Edit?id=1">Edit</a>
-            <a type="button" class="btn btn-outline-danger btn-sm" href="~/Delete?id=1">Delete</a>
-        </td>
-    </tr>
-    <tr>
-        <td><i class="bi bi-file-person"></i></td>
-        <td>Michal Pokluda</td>
-        <td>Marketing</td>
-        <td>mpokluda@outlook.com</td>
-        <td><i class="bi bi-apple"></i></td>
-        <td>
-            <a type="button" class="btn btn-outline-primary btn-sm" href="~/Edit?id=2">Edit</a>
-            <a type="button" class="btn btn-outline-danger btn-sm" href="~/Delete?id=2">Delete</a>
-        </td>
-    </tr>
+    @foreach (var employee in Model.Employees)
+    {
+        <tr>
+            <td><i class="bi bi-file-person"></i></td>
+            <td>@employee.Name</td>
+            <td>@employee.Department</td>
+            <td>@employee.Email</td>
+            <td>
+                @if (employee.IsMacUser)
+                {
+                    <i class="bi bi-apple"></i> 
+                }
+                @if (employee.IsWindowsUser)
+                {
+                    <i class="bi bi-microsoft"></i> 
+                }
+            </td>
+            <td>
+                <a type="button" class="btn btn-outline-primary btn-sm" href="~/Edit?id=@employee.Id">Edit</a>
+                <a type="button" class="btn btn-outline-danger btn-sm" href="~/Delete?id=@employee.Id">Delete</a>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
 
-<a type="button" class="btn btn-outline-primary btn-sm" href="~/AddNew">Add new employee</a>
+<a type="button" class="btn btn-primary btn-sm" href="~/AddNew">Add new employee</a>

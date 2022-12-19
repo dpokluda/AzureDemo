@@ -1,3 +1,5 @@
+using Test.Components;
+
 namespace Test;
 
 public abstract class Program
@@ -8,6 +10,7 @@ public abstract class Program
 
         // Add services to the container.
         builder.Services.AddRazorPages();
+        builder.Services.AddSingleton<IEmployeeRepository, FileEmployeeRepository>();
 
         var app = builder.Build();
 
