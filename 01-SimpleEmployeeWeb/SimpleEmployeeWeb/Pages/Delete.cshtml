@@ -5,9 +5,10 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<form>
+<form method="post">
     <div class="mb-3">
-        Do you really want to delete @Model.Employee.Name?
+        <input id="id" name="id" class="form-control visually-hidden" value="@Model.Id" hidden="true" />
+        Do you really want to delete @Model.Name?
     </div>
 
     <div>

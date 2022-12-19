@@ -8,10 +8,6 @@ namespace SimpleEmployeeWeb.Pages;
 [IgnoreAntiforgeryToken]
 public class ErrorModel : PageModel
 {
-    public string? RequestId { get; set; }
-
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-
     private readonly ILogger<ErrorModel> _logger;
 
     public ErrorModel(ILogger<ErrorModel> logger)
@@ -19,9 +15,19 @@ public class ErrorModel : PageModel
         _logger = logger;
     }
 
-    public void OnGet()
+    public void OnGet(string message)
     {
-        RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+        if (string.IsNullOrWhiteSpace(message))
+        {
+            Error = "An error occurred while processing your request.";
+        }
+        else
+        {
+            Error = message;
+        }
     }
+    
+    [BindProperty(SupportsGet = true)]
+    public string Error { get; set; }
 }
 

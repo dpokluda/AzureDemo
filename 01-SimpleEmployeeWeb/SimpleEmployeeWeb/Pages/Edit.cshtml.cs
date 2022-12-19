@@ -6,6 +6,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Primitives;
 using Test.Components;
 
 namespace SimpleEmployeeWeb.Pages;
@@ -21,26 +22,59 @@ public class EditModel : PageModel
         _logger = logger;
     }
 
-    public void OnGet(int id)
+    public IActionResult OnGet(int id)
     {
-        if (id != 0)
+        Id = id.ToString();
+        var employee = _repository.GetEmployees().FirstOrDefault(e => e.Id == id);
+        if (employee == null)
         {
-            Id = id;
-            Employee = _repository.GetEmployees().FirstOrDefault(e => e.Id == id);
+            return RedirectToPage("Error", new { message = "Unknown employee id."});
         }
+        
+        Name = employee.Name;
+        Department = employee.Department;
+        Email = employee.Email;
+        IsMacUser = employee.IsMacUser;
+        IsWindowsUser = employee.IsWindowsUser;
+        return null;
     }
 
     public IActionResult OnPost()
     {
-        this.Employee.Name = Request.Form["inputName"];
-        this.Employee.Department = Request.Form["inputDepartment"];
-        this.Employee.Email = Request.Form["inputEmail"];
-        // this.Employee.IsMacUser = Request.Form["checkboxMac"];
-        // this.Employee.IsWindowsUser = Request.Form["checkboxWindows"];
+        if (!Int32.TryParse(Id, out int id))
+        {
+            return RedirectToPage("Error", new { message = "Unknown employee id."});
+        }
 
-        return RedirectToPage("~/");
+        var employee = _repository.GetEmployees().FirstOrDefault(e => e.Id == id);
+        if (employee == null)
+        {
+            return RedirectToPage("Error", new { message = "Unknown employee."});
+        }
+        employee.Name = Name;
+        employee.Department = Department;
+        employee.Email = Email;
+        employee.IsMacUser = IsMacUser;
+        employee.IsWindowsUser = IsWindowsUser;
+
+        return RedirectToPage("Index");
     }
     
-    public int Id { get; private set; }
-    public Employee Employee { get; private set; }
+    [BindProperty(SupportsGet= true )]
+    public string Id { get; set; }
+    
+    [BindProperty]
+    public string Name { get; set; }
+    
+    [BindProperty]
+    public string Department { get; set; }
+    
+    [BindProperty]
+    public string Email { get; set; }
+    
+    [BindProperty]
+    public bool IsMacUser { get; set; }
+    
+    [BindProperty]
+    public bool IsWindowsUser { get; set; }
 }

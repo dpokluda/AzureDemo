@@ -4,6 +4,7 @@
 // </copyright>
 // -------------------------------------------------------------------------
 
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Test.Components;
 
@@ -20,12 +21,34 @@ public class DeleteModel : PageModel
         _logger = logger;
     }
 
-    public void OnGet(int id)
+    public IActionResult OnGet(int id)
     {
-        Id = id;
-        Employee = _repository.GetEmployees().FirstOrDefault(e => e.Id == id);
+        Id = id.ToString();
+        var employee = _repository.GetEmployees().FirstOrDefault(e => e.Id == id);
+        if (employee == null)
+        {
+            return RedirectToPage("Error", new { message = "Unknown employee id."});
+        }
+        
+        Name = employee.Name;
+        return null;
     }
 
-    public int Id { get; private set; }
-    public Employee Employee { get; private set; }
+    public IActionResult OnPost()
+    {
+        int id;
+        if (!Int32.TryParse(Id, out id))
+        {
+            return RedirectToPage("Error", new { message = "Unknown employee id."});
+        }
+
+        _repository.GetEmployees().RemoveAll(e => e.Id == id);
+        return RedirectToPage("Index");
+    }
+    
+    [BindProperty(SupportsGet= true )]
+    public string Id { get; set; }
+    
+    [BindProperty]
+    public string Name { get; set; }
 }

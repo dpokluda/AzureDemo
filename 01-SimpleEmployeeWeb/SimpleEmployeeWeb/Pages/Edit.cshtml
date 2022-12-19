@@ -1,5 +1,4 @@
 ﻿@page
-@using Test.Components
 @model EditModel
 @{
     ViewData["Title"] = "Update employee";
@@ -7,34 +6,35 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form>
+<form method="post">
     <div class="mb-3">
-        <label for="inputName">Picture</label>
+        <label for="picture">Picture</label>
+        <input id="id" name="id" class="form-control visually-hidden" value="@Model.Id" hidden="true" />
         <i class="bi bi-file-person"></i>
     </div>
     <div class="mb-3">
-        <label for="inputName">Name</label>
-        <input id="inputName" class="form-control col-md-6" placeholder="Employee full name" value="@Model.Employee.Name" />
+        <label for="name">Name</label>
+        <input id="name" name="name" class="form-control col-md-6" placeholder="Employee full name" value="@Model.Name" />
     </div>
     <div class="mb-3">
-        <label for="inputName">E-mail</label>
-        <input id="inputEmail" class="form-control col-md-6" placeholder="Employee e-mail address" value="@Model.Employee.Email" />
+        <label for="email">E-mail</label>
+        <input id="email" name="email" class="form-control col-md-6" placeholder="Employee e-mail address" value="@Model.Email" />
     </div>
     <div class="mb-3">
-        <label for="inputDepartment">Department</label>
-        <input id="inputDepartment" class="form-control col-md-6" placeholder="Employee department" value="@Model.Employee.Department" />
+        <label for="department">Department</label>
+        <input id="department" name="department" class="form-control col-md-6" placeholder="Employee department" value="@Model.Department" />
     </div>
     <div class="mb-3">
-        <label for="inputInterests">Interests:</label>
+        <label for="interests">Interests:</label>
         <div class="form-check">
             <span class="col-sm-1" />
-            <input class="form-check-input" type="checkbox" value="mac" name="checkboxMac" id="checkboxMac" checked="@(@Model.Employee.IsMacUser)" />
-            <label for="checkboxMac"><i class="bi bi-apple"> Mac user</i></label>
+            <input class="form-check-input" type="checkbox" value="true" name="isMacUser" id="isMacUser" checked="@(@Model.IsMacUser)" />
+            <label for="isMacUser"><i class="bi bi-apple"> Mac user</i></label>
         </div>
         <div class="form-check">
             <span class="col-sm-1" />
-            <input class="form-check-input" type="checkbox" value="win" name="checkboxWindows" id="checkboxWindows" checked="@(@Model.Employee.IsWindowsUser)" />
-            <label for="checkboxWindows"><i class="bi bi-microsoft"> Windows user</i></label>
+            <input class="form-check-input" type="checkbox" value="true" name="isWindowsUser" id="isWindowsUser" checked="@(@Model.IsWindowsUser)" />
+            <label for="isWindowsUser"><i class="bi bi-microsoft"> Windows user</i></label>
         </div>
     </div>
   <div class="col-12">
