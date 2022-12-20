@@ -21,7 +21,18 @@
     @foreach (var employee in Model.Employees)
     {
         <tr>
-            <td><i class="bi bi-file-person"></i></td>
+            <td>
+                @{
+                    if (employee.PictureUrl == null)
+                    {
+                        <i class="bi bi-file-person" id="placeholder"></i>
+                    }
+                    else
+                    {
+                        <img src="@employee.PictureUrl" />
+                    }
+                }
+            </td>
             <td>@employee.Name</td>
             <td>@employee.Department</td>
             <td>@employee.Email</td>

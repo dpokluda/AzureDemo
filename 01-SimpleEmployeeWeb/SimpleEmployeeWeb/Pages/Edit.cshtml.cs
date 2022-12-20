@@ -6,7 +6,6 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Primitives;
 using Test.Components;
 
 namespace SimpleEmployeeWeb.Pages;
@@ -14,11 +13,13 @@ namespace SimpleEmployeeWeb.Pages;
 public class EditModel : PageModel
 {
     private readonly IEmployeeRepository _repository;
+    private readonly IPictureService _pictureService;
     private readonly ILogger<EditModel> _logger;
 
-    public EditModel(IEmployeeRepository repository, ILogger<EditModel> logger)
+    public EditModel(IEmployeeRepository repository, IPictureService pictureService, ILogger<EditModel> logger)
     {
         _repository = repository;
+        _pictureService = pictureService;
         _logger = logger;
     }
 
@@ -32,6 +33,7 @@ public class EditModel : PageModel
         }
         
         Name = employee.Name;
+        PictureUrl = employee.PictureUrl;
         Department = employee.Department;
         Email = employee.Email;
         IsMacUser = employee.IsMacUser;
@@ -56,12 +58,23 @@ public class EditModel : PageModel
         employee.Email = Email;
         employee.IsMacUser = IsMacUser;
         employee.IsWindowsUser = IsWindowsUser;
+        if (File != null)
+        {
+            var pictureUrl = _pictureService.UploadEmployeePicture(employee.Id, File);
+            employee.PictureUrl = pictureUrl;
+        }
 
         return RedirectToPage("Index");
     }
     
     [BindProperty(SupportsGet= true )]
     public string Id { get; set; }
+    
+    [BindProperty]
+    public string PictureUrl { get; set; }
+    
+    [BindProperty]
+    public IFormFile  File { get; set; }
     
     [BindProperty]
     public string Name { get; set; }

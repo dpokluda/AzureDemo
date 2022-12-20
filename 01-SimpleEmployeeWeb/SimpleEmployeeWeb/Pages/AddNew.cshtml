@@ -6,10 +6,13 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="mb-3">
-        <label for="picture">Picture</label>
-        <i class="bi bi-file-person"></i>
+        <div><label for="picture">Picture</label></div>
+        <div>
+            <i class="bi bi-file-person" id="placeholder"></i>
+            <input type="file" name="file" accept=".png, .jpg, .jpeg, .gif" />
+        </div>
     </div>
     <div class="mb-3">
         <label for="name">Name</label>

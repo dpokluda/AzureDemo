@@ -13,11 +13,13 @@ namespace SimpleEmployeeWeb.Pages;
 public class AddNewModel : PageModel
 {
     private readonly IEmployeeRepository _repository;
+    private readonly IPictureService _pictureService;
     private readonly ILogger<AddNewModel> _logger;
 
-    public AddNewModel(IEmployeeRepository repository, ILogger<AddNewModel> logger)
+    public AddNewModel(IEmployeeRepository repository, IPictureService pictureService, ILogger<AddNewModel> logger)
     {
         _repository = repository;
+        _pictureService = pictureService;
         _logger = logger;
     }
     public void OnGet()
@@ -41,10 +43,19 @@ public class AddNewModel : PageModel
         employee.Email = Email;
         employee.IsMacUser = IsMacUser;
         employee.IsWindowsUser = IsWindowsUser;
+
+        if (File != null)
+        {
+            var pictureUrl = _pictureService.UploadEmployeePicture(employee.Id, File);
+            employee.PictureUrl = pictureUrl;
+        }
         _repository.GetEmployees().Add(employee);
         
         return RedirectToPage("Index");
     }
+    
+    [BindProperty]
+    public IFormFile  File { get; set; }
     
     [BindProperty]
     public string Name { get; set; }
